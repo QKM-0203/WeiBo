@@ -6,8 +6,26 @@ import java.util.List;
 public class BlogBean {
     private String bossId;
     private String think;
+    private String head;
+    private String name;
     private String creatAtAndName;
     private List<PictureBean> listPic;
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
     private List<CommentBean> listCom;
@@ -35,6 +53,7 @@ public class BlogBean {
     public void setListPic(List<PictureBean> listPic) {
         this.listPic = listPic;
     }
+
 
 
     public String getThink() {

@@ -14,6 +14,7 @@ public interface BlogService {
     public int attentions(String bossId);
     public int Fans(String bossId);
     public void addAttentions(String bossId,String peopleId);
-
     public void deleteAttentions(String BossId, String peopleId);
+    public void modifyHead(String headUri, String bossId);
 }
+

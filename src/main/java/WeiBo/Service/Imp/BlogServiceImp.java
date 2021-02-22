@@ -57,4 +57,8 @@ public class BlogServiceImp implements BlogService {
     public void deleteAttentions(String bossId, String peopleId) {
            blogDao.deleteAttention(bossId,peopleId);
     }
+    @Override
+    public void modifyHead(String headUri, String bossId) {
+        blogDao.modifyHead(headUri,bossId);
+    }
 }

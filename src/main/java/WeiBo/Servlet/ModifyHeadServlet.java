@@ -1,7 +1,6 @@
 package WeiBo.Servlet;
 
 import WeiBo.Bean.*;
-import WeiBo.Service.BlogService;
 import WeiBo.Service.Imp.BlogServiceImp;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -21,72 +20,73 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(value = "/addBlogServlet",name = "addBlogServlet")
-public class AddBlogServlet extends HttpServlet {
+@WebServlet(value = "/modifyHeadServlet",name = "modifyHeadServlet")
+public class ModifyHeadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Date d = new Date();
         ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory());
         servletFileUpload.setHeaderEncoding("utf-8");
-        String userImg = "userImg";
         HttpSession session = request.getSession();
-        BossBean boss = (BossBean)session.getAttribute("name");
+        BossBean boss = (BossBean) session.getAttribute("name");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateNowStr = sdf.format(d);
-        BlogBean blogBean = new BlogBean();
-        blogBean.setBossId(boss.getId());
-        blogBean.setCreatAtAndName(dateNowStr+boss.getId());
-        blogBean.setHead(boss.getHead());
-        blogBean.setName(boss.getName());
         try {
             ArrayList<PictureBean> pictureBeans = new ArrayList<>();
             List<FileItem> fileItems = servletFileUpload.parseRequest(request);
             for (FileItem fileItem : fileItems) {
-                if(!fileItem.isFormField()){
+                if (!fileItem.isFormField()) {
                     String name = fileItem.getName();
                     String substring = name.substring(name.lastIndexOf("."));
                     String picName = new Date().getTime() +boss.getId()+substring;
-
-                    String realPath = this.getServletContext().getRealPath("/userImg");
-                    PictureBean pictureBean = new PictureBean();
-                    pictureBean.setPictureUri(realPath.substring(60)+"/"+picName);
-                    pictureBean.setCreatAtAndName(dateNowStr+boss.getId());
-                    pictureBeans.add(pictureBean);
+                    String realPath = this.getServletContext().getRealPath("/head");
                     File file = new File(realPath);
-                    if(!file.exists()){
+                    if (!file.exists()) {
                         file.mkdir();
                     }
-                    File file1 = new File(realPath,picName);
+                    File file1 = new File(realPath, picName);
                     //把上传文件的内容保存到指定文件
                     fileItem.write(file1);
                     fileItem.delete();
+                    BlogServiceImp blogServiceImp = new BlogServiceImp();
+                    blogServiceImp.modifyHead("/head/"+picName,boss.getId());
+                    BossBean bossBean= (BossBean) request.getSession().getAttribute("name");
+                    File file2 = new File(this.getServletContext().getRealPath(bossBean.getHead()));
+                    if(!file2.getName().equals("default.jpg")){
+                        file2.delete();
+                    }
+                    bossBean.setHead("/head/"+picName);
+                    request.getSession().setAttribute("name",bossBean);
 
-                }else{
-                        String think = fileItem.getString("utf-8");
-                        if (think != null && !think.equals("0")) {
-                            blogBean.setThink(think);
-                        }
+                    List<BlogBean> blogs = (List<BlogBean>)request.getSession().getAttribute("AllBlogs");
+                    List<BlogBean> blogBeans = modifyHead(blogs, bossBean.getId(), bossBean.getHead());
+                    request.getSession().setAttribute("AllBlogs",blogBeans);
+
+                    List<BlogBean> blog = (List<BlogBean>)request.getSession().getAttribute("blogs");
+                    List<BlogBean> blogBeans1 = modifyHead(blog, bossBean.getId(), bossBean.getHead());
+                    request.getSession().setAttribute("blogs",blogBeans1);
+
                 }
             }
-            blogBean.setListPic(pictureBeans);
         } catch (FileUploadException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        BlogService blogServiceImp = new BlogServiceImp();
-        blogServiceImp.addBlog(blogBean);
-        SumBean sum = (SumBean) request.getSession().getAttribute("sum");
-        sum.setTotalBlogs(sum.getTotalBlogs()+1);
-        blogBean.setListCom(new ArrayList<CommentBean>());
-        request.getSession().setAttribute("sum",sum);
-        List<BlogBean> blogs = (List<BlogBean>)request.getSession().getAttribute("AllBlogs");
-        blogs.add(0,blogBean);
-        request.getSession().setAttribute("AllBlogs",blogs);
-        response.sendRedirect(request.getContextPath()+"/View/Blog.jsp");
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     doPost(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+    public List<BlogBean> modifyHead(List<BlogBean> blogs,String bossId, String head){
+        for (BlogBean blog : blogs) {
+            if(blog.getBossId().equals(bossId)){
+                blog.setHead(head);
+            }
+            List<CommentBean> listCom = blog.getListCom();
+            for (CommentBean commentBean : listCom) {
+                if(commentBean.getBossId().equals(bossId)){
+                    commentBean.setHead(head);
+                }
+            }
+        }
+        return blogs;
     }
 }

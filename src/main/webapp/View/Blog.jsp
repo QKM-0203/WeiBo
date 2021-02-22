@@ -37,10 +37,6 @@
                                 <input type="file" name = "filename" value = "选择图片" multiple="multiple"/><br>
                             </div>
                         </li>
-                        <!-- <li><a href="">图片</a></li>
-                        <li><a href="">视频</a></li>
-                        <li><a href="">话题</a></li>
-                        <li><a href="">头条文章</a></li> -->
                     </ul>
                     <div id="form-submit">
                         <button type="submit">发布</button>
@@ -54,8 +50,8 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}/img/3.jpg" alt=""></li>
-                            <li><a>${blog.bossId}</a></li><br>
+                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
+                            <li><a>${blog.name}</a></li><br>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
 
@@ -71,7 +67,7 @@
                             </li>
 
                             </c:if>
-                            <c:if test="${blog.bossId==sessionScope.name.id}">
+                            <c:if test="${blog.bossId == sessionScope.name.id}">
 
                             <li class="delete_weibo" >
                                 <div class="delete_box">
@@ -109,8 +105,8 @@
                             <ul>
                                 <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=all" method="post">
                                 <div class="reply_box" >
-                                    <img src="${pageContext.request.contextPath}/img/1.jpg" alt="">
-                                    <p class="reply_user">${com.bossId}:${com.comment}</p>
+                                    <img src="${pageContext.request.contextPath}${com.head}" alt="">
+                                    <p class="reply_user">${com.name}:${com.comment}</p>
                                 </div>
                                 <span class="reply_time">${com.creatAt}</span>
                                     <c:if test="${com.bossId == sessionScope.name.id}">
@@ -129,8 +125,8 @@
         <div id="right">
             <div class="right_header">
 
-                <img class="pic"  src="${pageContext.request.contextPath}/img/2.jpg" alt="">
-                <p class="name" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
+                <img class="pic"  src="${pageContext.request.contextPath}${sessionScope.name.head}" alt="">
+                <p class="name" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.name.name}</p>
             </div>
             <div class="left-box">
                 <li class="td">

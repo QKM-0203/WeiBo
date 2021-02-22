@@ -28,6 +28,8 @@ public class AddCommentServlet extends HttpServlet {
         commentBean.setCreatAt(dateNowStr);
         commentBean.setBossId(bossBean.getId());
         commentBean.setComment(comment);
+        commentBean.setHead(bossBean.getHead());
+        commentBean.setName(bossBean.getName());
         commentBean.setBlogCreatAtAndName(blogCreatAtAndName);
         CommentServiceImpl commentService = new CommentServiceImpl();
         commentService.addComment(commentBean);

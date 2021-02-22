@@ -9,8 +9,8 @@ public class CommentDao {
 
     public void addComment(CommentBean commentBean) {
         String sql = "insert into comment value(?,?,?,?)";
-        jdbcTemplate.update(sql,commentBean.getComment(),commentBean.getCreatAt(),commentBean.getBlogCreatAtAndName(),commentBean.getBossId());
-
+        jdbcTemplate.update(sql,commentBean.getComment(),commentBean.getCreatAt(),commentBean.getBlogCreatAtAndName(),commentBean.getBossId()
+        );
     }
 
     public void deleteComment(String bossId,String creatAt) {

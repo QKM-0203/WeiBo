@@ -4,7 +4,26 @@ public class CommentBean {
     private String bossId;
     private String comment;
     private String creatAt;
+    private String head;
+    private String name;
     private String blogCreatAtAndName;
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     public String getBlogCreatAtAndName() {
         return blogCreatAtAndName;

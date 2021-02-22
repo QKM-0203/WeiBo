@@ -3,7 +3,7 @@ package WeiBo.Bean;
 public class BossBean {
 
     private String name;
-
+    private String head;
     private String id;
     private String password;
 
@@ -13,6 +13,15 @@ public class BossBean {
 
     public String getId() {
         return id;
+    }
+
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
     }
 
     public void setId(String id) {

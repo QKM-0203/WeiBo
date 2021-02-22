@@ -43,6 +43,7 @@ public class LoginServlet extends HttpServlet {
             bossBean.setPassword(password);
             bossServiceImp bossServiceImp = new bossServiceImp();
             BossBean bossBean1 = bossServiceImp.findBoss(bossBean);
+            System.out.println(bossBean1.getHead());
             if(bossBean1 != null){
                 session.setAttribute("name",bossBean1);
                 String remember = request.getParameter("remember");

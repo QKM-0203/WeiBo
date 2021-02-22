@@ -23,7 +23,7 @@
            <div class="header">
                <img  src="${pageContext.request.contextPath}/img/2.jpg" alt="">
                <input type="file" id="btn_file" style="display:none">
-               <img class="pic" src="${pageContext.request.contextPath}/img/3.jpg" alt="" onclick="F_Open_dialog()">
+               <img class="pic" src="${pageContext.request.contextPath}${name.head}" alt="" onclick="F_Open_dialog()">
                <p class="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
            </div>
 
@@ -52,7 +52,7 @@
                 <tr class="information_tr">
                     <td>昵称:
                         <span class="form1">${userInformation.name}</span>
-                        <input type="text" class="form_control" name="name" value="${userInformation.name}">
+                        <input type="text" class="form_control" name="name"  value="${userInformation.name}">
                     </td>
                 </tr>
                 <tr class="information_tr">
@@ -128,8 +128,8 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}/img/3.jpg" alt=""></li>
-                            <li><a>${name.name}</a></li><br>
+                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
+                            <li><a>${blog.name}</a></li><br>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
                             <li class="delete_weibo" >
@@ -166,8 +166,8 @@
                                 <ul>
                                     <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=own" method="post">
                                         <div class="reply_box" >
-                                            <img src="${pageContext.request.contextPath}/img/1.jpg" alt="">
-                                            <p class="reply_user">${name.name}:${com.comment}</p>
+                                            <img src="${pageContext.request.contextPath}${com.head}" alt="">
+                                            <p class="reply_user">${com.name}:${com.comment}</p>
                                         </div>
                                         <span class="reply_time">${com.creatAt}</span>
                                         <c:if test="${com.bossId == name.id}">

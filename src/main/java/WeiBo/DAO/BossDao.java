@@ -23,12 +23,13 @@ public class BossDao {
     }
 
     public int addBoss(BossBean bossBean) {
-        String sql = "insert into boss value(?,?,?)";
+        String sql = "insert into boss value(?,?,?,?)";
         try{
-            jdbcTemplate.update(sql,bossBean.getId(), bossBean.getPassword());
+            jdbcTemplate.update(sql,bossBean.getId(), bossBean.getPassword(),bossBean.getName(),"/head/default.jpg");
+            return 1;
         }catch(Exception e){
             return 0;
         }
-        return 1;
+
     }
 }

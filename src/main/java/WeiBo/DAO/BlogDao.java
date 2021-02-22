@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class BlogDao {
@@ -30,7 +31,12 @@ public class BlogDao {
 
     public List<BlogBean> forEachBlog(String sql,Object...args){
         List<BlogBean> blogBeans = jdbcTemplate.query(sql, new BeanPropertyRowMapper<BlogBean>(BlogBean.class),args);
-
+        String sql1 = "select boss.name ,boss.head from boss where ID = ?";
+        for (BlogBean blogBean : blogBeans) {
+            List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql1, blogBean.getBossId());
+            blogBean.setHead((String)maps.get(0).get("head"));
+            blogBean.setName((String)maps.get(0).get("name"));
+        }
         for (BlogBean blogBean : blogBeans) {
             String creatAt = blogBean.getCreatAtAndName();
             List<PictureBean> pictures = findPictures(creatAt);
@@ -65,11 +71,11 @@ public class BlogDao {
 
     public void addBlog(BlogBean blogBean) {
         String sql = "insert into Blog value(?,?,?)";
-        jdbcTemplate.update(sql,blogBean.getBossId(),blogBean.getThink(),blogBean.getCreatAtAndName());
+        jdbcTemplate.update(sql,blogBean.getBossId(),blogBean.getThink(),blogBean.getCreatAtAndName()
+               );
         if(blogBean.getListPic()!= null){
             addPictures(blogBean);
         }
-
     }
 
     public void deleteBlog(String bossId,String creatAtAndName) {
@@ -90,8 +96,16 @@ public class BlogDao {
 
     public List<CommentBean> findComment(String blogCreatAtAndName){
         String sql = "select * from comment where blogCreatAtAndName = ? order by creatAt DESC";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentBean>(CommentBean.class), blogCreatAtAndName);
+        List<CommentBean> query = jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentBean>(CommentBean.class), blogCreatAtAndName);
+        String sql1 = "select boss.name ,boss.head from boss where ID = ?";
+        for (CommentBean commentBean : query) {
+             List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql1, commentBean.getBossId());
+             commentBean.setHead((String)maps.get(0).get("head"));
+             commentBean.setName((String)maps.get(0).get("name"));
+        }
+        return  query;
     }
+
 
 
 
@@ -121,4 +135,11 @@ public class BlogDao {
          jdbcTemplate.update(sql,bossId,peopleId);
 
     }
+
+    public void modifyHead(String headUri, String bossId) {
+        String sql = "update boss set head = ? where ID = ?";
+        jdbcTemplate.update(sql,headUri,bossId);
+    }
+
+
 }
