@@ -23,19 +23,26 @@ public class InformationDao {
         }
 
 
-    public void addInformation(String bossId) {
+    public void addInformation(String bossId,String name) {
         String sql = "insert into information value(?,?,?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql,bossId,null,null,null,null,null,null,null,null);
+        jdbcTemplate.update(sql,bossId,name,null,null,null,null,null,null,null);
     }
 
 
-    public void updateInformation(InformationBean InformationBean) {
+    public int updateInformation(InformationBean InformationBean) {
         String sql = "update information set NAME = ?,SEX = ?,AGE = ?,birth = ?,BIRTHAREA = ?,QQ = ?,MAIL = ?,own = ? where bossId = ?";
-        jdbcTemplate.update(sql, InformationBean.getName(), InformationBean.getSex(),
-                InformationBean.getAge(), InformationBean.getBirth(),InformationBean.getBirthArea(), InformationBean.getQq(), InformationBean.getMail(), InformationBean.getOwn(),
-                InformationBean.getBossId());
+         try {
+             jdbcTemplate.update(sql, InformationBean.getName(), InformationBean.getSex(),
+                     InformationBean.getAge(), InformationBean.getBirth(),InformationBean.getBirthArea(), InformationBean.getQq(), InformationBean.getMail(), InformationBean.getOwn(),
+                     InformationBean.getBossId());
+             String sql2 = "update boss set name = ? where ID = ?";
+             jdbcTemplate.update(sql2,InformationBean.getName(),InformationBean.getBossId());
+             return 1;
+         }catch (DataAccessException e){
+             return 0;
+         }
 
-    }
+       }
 
 
 }

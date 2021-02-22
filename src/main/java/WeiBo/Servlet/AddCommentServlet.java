@@ -26,24 +26,23 @@ public class AddCommentServlet extends HttpServlet {
         BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
         CommentBean commentBean = new CommentBean();
         commentBean.setCreatAt(dateNowStr);
-        commentBean.setBossId(bossBean.getName());
+        commentBean.setBossId(bossBean.getId());
         commentBean.setComment(comment);
         commentBean.setBlogCreatAtAndName(blogCreatAtAndName);
         CommentServiceImpl commentService = new CommentServiceImpl();
         commentService.addComment(commentBean);
         String id = request.getParameter("id");
         if(id.equals("all")) {
-
-            List<BlogBean> blogs = (List<BlogBean>) request.getSession().getAttribute("AllBlogs");
-            addComment(blogs,blogCreatAtAndName,commentBean);
-            request.getSession().setAttribute("AllBlogs", blogs);
+            List<BlogBean> allBlogs = (List<BlogBean>) request.getSession().getAttribute("AllBlogs");
+            addComment(allBlogs,blogCreatAtAndName,commentBean);
+            String bossId = blogCreatAtAndName.substring(19);
+            request.getSession().setAttribute("AllBlogs", allBlogs);
             response.sendRedirect(request.getContextPath() + "/View/Blog.jsp");
         }else{
             List<BlogBean> blogs = (List<BlogBean>) request.getSession().getAttribute("blogs");
             addComment(blogs,blogCreatAtAndName,commentBean);
             request.getSession().setAttribute("blogs", blogs);
             response.sendRedirect(request.getContextPath() + "/View/Information.jsp");
-
         }
     }
 

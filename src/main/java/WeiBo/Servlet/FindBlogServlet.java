@@ -22,9 +22,9 @@ public class FindBlogServlet extends HttpServlet {
         BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
 
         SumBean sumBean = new SumBean();
-        sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossBean.getName()));
-        sumBean.setAttention(blogServiceImp.attentions(bossBean.getName()));
-        sumBean.setFans(blogServiceImp.Fans(bossBean.getName()));
+        sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossBean.getId()));
+        sumBean.setAttention(blogServiceImp.attentions(bossBean.getId()));
+        sumBean.setFans(blogServiceImp.Fans(bossBean.getId()));
         request.getSession().setAttribute("sum", sumBean);
 
         if(size.equals("all")){
@@ -33,7 +33,7 @@ public class FindBlogServlet extends HttpServlet {
             request.getRequestDispatcher("/View/Blog.jsp").forward(request,response);
         }else{
             HttpSession session = request.getSession();
-            List<BlogBean> blogsByBoosId = blogServiceImp.findBlogsByBoosId(bossBean.getName());
+            List<BlogBean> blogsByBoosId = blogServiceImp.findBlogsByBoosId(bossBean.getId());
             request.getSession().setAttribute("blogs",blogsByBoosId);
             request.getRequestDispatcher("/View/Information.jsp").forward(request,response);
         }

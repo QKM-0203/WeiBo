@@ -18,15 +18,15 @@ public class InformationServiceImp implements InformationService {
 
 
     @Override
-    public void addInformation(String bossId) {
+    public void addInformation(String bossId,String name) {
 
-        informationDAO.addInformation(bossId);
+        informationDAO.addInformation(bossId,name);
     }
 
     @Override
-    public void updateInformation(InformationBean InformationBean) {
+    public int updateInformation(InformationBean InformationBean) {
 
-        informationDAO.updateInformation(InformationBean);
+        return informationDAO.updateInformation(InformationBean);
     }
 
     @Override

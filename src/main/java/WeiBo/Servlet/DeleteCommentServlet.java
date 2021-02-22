@@ -22,16 +22,16 @@ public class DeleteCommentServlet extends HttpServlet {
         BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
         String blogCreatAtAndName = request.getParameter("blogCreatAtAndName");
         CommentServiceImpl commentService = new CommentServiceImpl();
-        commentService.deleteComment(bossBean.getName(),creatAt);
+        commentService.deleteComment(bossBean.getId(),creatAt);
         String id = request.getParameter("id");
         if(id.equals("all")) {
             List<BlogBean> blogs = (List<BlogBean>) request.getSession().getAttribute("AllBlogs");
-            deleteListElement(blogs,blogCreatAtAndName,bossBean.getName(),creatAt);
+            deleteListElement(blogs,blogCreatAtAndName,bossBean.getId(),creatAt);
             request.getSession().setAttribute("AllBlogs", blogs);
             response.sendRedirect(request.getContextPath() + "/View/Blog.jsp");
         }else{
             List<BlogBean> blogs = (List<BlogBean>) request.getSession().getAttribute("blogs");
-            deleteListElement(blogs,blogCreatAtAndName,bossBean.getName(),creatAt);
+            deleteListElement(blogs,blogCreatAtAndName,bossBean.getId(),creatAt);
             request.getSession().setAttribute("blogs", blogs);
             response.sendRedirect(request.getContextPath() + "/View/Information.jsp");
         }
@@ -45,7 +45,7 @@ public class DeleteCommentServlet extends HttpServlet {
             if (blogs.get(i).getCreatAtAndName().equals(blogCreatAtAndName)) {
                 List<CommentBean> listCom = blogs.get(i).getListCom();
                 for(int i1 = 0 ;i1 < listCom.size();i1++){
-                    if(listCom.get(i).getCreatAt().equals(creatAt) && listCom.get(i).getBossId().equals(bossId)){
+                    if(listCom.get(i1).getCreatAt().equals(creatAt) && listCom.get(i1).getBossId().equals(bossId)){
                         listCom.remove(i1);
                         i1--;
                         break;

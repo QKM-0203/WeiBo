@@ -4,8 +4,8 @@ import WeiBo.Bean.PageBean;
 import WeiBo.Bean.InformationBean;
 
 public interface InformationService {
-    public void addInformation(String bossId);
+    public void addInformation(String bossId,String name);
     public InformationBean findInformation(String bossId);
-    public void updateInformation(InformationBean InformationBean);
+    public int updateInformation(InformationBean InformationBean);
     public PageBean<InformationBean> findUserByPage(int currentPage, int rows) ;
 }

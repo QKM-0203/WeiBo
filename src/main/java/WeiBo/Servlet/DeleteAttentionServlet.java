@@ -18,7 +18,7 @@ public class DeleteAttentionServlet extends HttpServlet {
         BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
         SumBean sum = (SumBean) request.getSession().getAttribute("sum");
         BlogServiceImp blogServiceImp = new BlogServiceImp();
-        blogServiceImp.deleteAttentions(bossBean.getName(), peopleId);
+        blogServiceImp.deleteAttentions(bossBean.getId(), peopleId);
         sum.setAttention(sum.getAttention()-1);
         request.getSession().setAttribute("sum",sum);
         request.getRequestDispatcher("View/Blog.jsp").forward(request,response);

@@ -54,24 +54,24 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}/img/head.png" alt=""></li>
+                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}/img/3.jpg" alt=""></li>
                             <li><a>${blog.bossId}</a></li><br>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
-                            <c:if test="${blog.bossId != name.name}">
 
+                            <c:if test="${blog.bossId != sessionScope.name.id}">
 
                             <li class="attention">
                                 <form action="${pageContext.request.contextPath}/addAttentionServlet?peopleId=${blog.bossId}"  method="post">
-                                <span class="attention_a attention_a1">+关注</span>
+                                    <input class="attention_a1"   type="button" value="+关注">
                                 </form>
                                 <form action="${pageContext.request.contextPath}/deleteAttentionServlet?peopleId=${blog.bossId}" method="post">
-                                <span class="attention_a attention_a2">已关注</span>
+                                    <input class="attention_a2"   type="button" value="已关注">
                                 </form>
                             </li>
 
                             </c:if>
-                            <c:if test="${blog.bossId==sessionScope.name.name}">
+                            <c:if test="${blog.bossId==sessionScope.name.id}">
 
                             <li class="delete_weibo" >
                                 <div class="delete_box">
@@ -100,36 +100,22 @@
                         </ul>
                     </div>
                     <div class="comment">
-                        <form action="${pageContext.request.contextPath}/addCommentServlet?blogCreatAtAndName=${blog.creatAtAndName}&id=all">
-                            <textarea name="comment"  cols="62" rows="3"></textarea>
+                        <form action="${pageContext.request.contextPath}/addCommentServlet?blogCreatAtAndName=${blog.creatAtAndName}&id=all" method="post">
+                            <textarea name="comment"  cols="62" rows="3" ></textarea>
                             <button type="submit">评论</button>
                         </form>
                         <div class="reply">
-                            <ul>
-                                <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=all">
-                                    <div class="reply_box" >
-                                        <img src="${pageContext.request.contextPath}/img/1.jpg" alt="">
-                                        <p class="reply_user">：评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论
-                                            评论评论评论评论评论评论评论评论评论评论评论</p>
-                                    </div>
-
-                                    <span class="reply_time">2020-02-03  12：23：33</span>
-
-                                    <button type="button" class="reply_delete">删除</button>
-                                </form>
-
-                            </ul>
                             <c:forEach items="${blog.listCom}" var="com">
                             <ul>
-                                <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=all">
+                                <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=all" method="post">
                                 <div class="reply_box" >
                                     <img src="${pageContext.request.contextPath}/img/1.jpg" alt="">
-                                    <p class="reply_user">${blog.bossId}:${com.comment}</p>
+                                    <p class="reply_user">${com.bossId}:${com.comment}</p>
                                 </div>
-
                                 <span class="reply_time">${com.creatAt}</span>
-
-                                <button type="button" class="reply_delete">删除</button>
+                                    <c:if test="${com.bossId == sessionScope.name.id}">
+                                    <button type="submit" class="reply_delete">删除</button>
+                                   </c:if>
                                 </form>
 
                             </ul>
@@ -142,7 +128,7 @@
         </div>
         <div id="right">
             <div class="right_header">
-                <!-- <img  src="../public/img/1.jpg" alt=""> -->
+
                 <img class="pic"  src="${pageContext.request.contextPath}/img/2.jpg" alt="">
                 <p class="name" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
             </div>
@@ -188,6 +174,22 @@
             }
         }
 
+        var attention_a1 = document.getElementsByClassName('attention_a1')
+        var attention_a2 = document.getElementsByClassName('attention_a2')
+        for( let i in attention_a1){
+            attention_a1[i].onclick = function(){
+                attention_a1[i].style.display ='none'
+                attention_a2[i].style.display = 'inline-block'
+            }
+        }
+        var attention_a1 = document.getElementsByClassName('attention_a1')
+        var attention_a2 = document.getElementsByClassName('attention_a2')
+        for( let i in attention_a2){
+            attention_a2[i].onclick = function(){
+                attention_a2[i].style.display ='none'
+                attention_a1[i].style.display = 'inline-block'
+            }
+        }
     </script>
     <script>
         window.onload = function(){
@@ -210,36 +212,10 @@
                     count++
                 }
             }
-            var attention = document.getElementsByClassName('attention')
-            var attention_a1 = document.getElementsByClassName('attention_a1')
-            var attention_a2 = document.getElementsByClassName('attention_a2')
 
-            for(let i in attention){
-                let count2 = 0
-                attention[i].onclick = function(){
-                    if(count2 % 2 === 0){
-                        attention_a1[i].style.display = "none"
-                        attention_a2[i].style.display = "inline"
-                    }
-                    else{
-                        attention_a1[i].style.display = "inline"
-                        attention_a2[i].style.display = "none"
-                    }
-                    count2++
-                }
-            }
         }
 
+    </script>
 
-    </script>
-    <head>
-        bai<script type="text/javascript">
-        function change()
-        {
-            var btn = document.getElementById("btn");
-            btn.value="已关注";
-            btn.disabled=true;
-        }
-    </script>
 </body>
 </html>

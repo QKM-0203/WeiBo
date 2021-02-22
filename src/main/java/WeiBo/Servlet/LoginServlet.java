@@ -19,27 +19,27 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //首先判断验证码是否正确
         HttpSession session = request.getSession();
-        session.removeAttribute("ku");
         String checkBoard = request.getParameter("checkBoard");
         if(checkBoard.equals("")){
-            session.setAttribute("ku","验证码为空");
+            request.setAttribute("ku","验证码为空");
             response.sendRedirect(request.getContextPath()+"/View/Login.jsp");
         } else if(session.getAttribute("checkBoard").equals(checkBoard)){
             session.removeAttribute("checkBoard");
             Cookie[] cookies = request.getCookies();
             for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("Name")){
+                if(cookie.getName().equals("Id")){
                     request.getRequestDispatcher("/findBlogServlet?size=all").forward(request,response);
                 }
             }
             BossBean bossBean = new BossBean();
-            String user = request.getParameter("boss");
+            String Id = request.getParameter("Id");
             String password = request.getParameter("password");
-            if(user == null | password == null){
-                session.setAttribute("ku","用户名或密码为空");
-                response.sendRedirect(request.getContextPath()+"/View/Login.jsp");
+            if(Id == null | password == null){
+                request.setAttribute("ku","用户名或密码为空");
+                request.getRequestDispatcher("/View/Login.jsp").forward(request,response);
             }
-            bossBean.setName(user);
+
+            bossBean.setId(Id);
             bossBean.setPassword(password);
             bossServiceImp bossServiceImp = new bossServiceImp();
             BossBean bossBean1 = bossServiceImp.findBoss(bossBean);
@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("name",bossBean1);
                 String remember = request.getParameter("remember");
                 if(remember != null){
-                    Cookie cookie = new Cookie("Name", bossBean.getName());
+                    Cookie cookie = new Cookie("Id", bossBean.getId());
                     Cookie password1 = new Cookie("password", bossBean.getPassword());
                     cookie.setMaxAge(60);
                     password1.setMaxAge(60);
@@ -56,14 +56,15 @@ public class LoginServlet extends HttpServlet {
                 }
                response.sendRedirect(request.getContextPath()+"/findBlogServlet?size=all");
             } else{
-                session.setAttribute("ku","用户名或密码错误");
+                request.setAttribute("ku","用户名或密码错误");
+                request.getRequestDispatcher("/View/Login.jsp").forward(request,response);
                 response.sendRedirect(request.getContextPath()+"/View/Login.jsp");
 
             }
         }else{
             session.removeAttribute("checkBoard");
-            session.setAttribute("ku","验证码错误");
-            response.sendRedirect(request.getContextPath()+"/View/Login.jsp");
+            request.setAttribute("ku","验证码错误");
+            request.getRequestDispatcher("/View/Login.jsp").forward(request,response);
 
         }
 

@@ -135,7 +135,7 @@
         <div class="login-form">
             <div class="login-title">注册</div>
             <div class="one">
-                <input name="username" type="text" placeholder="手机号/邮箱">
+                <input name="Id" type="text" placeholder="手机号/邮箱">
             </div>
             <div class="warning"></div>
             <div class="one">

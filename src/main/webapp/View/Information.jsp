@@ -21,10 +21,13 @@
            </nav>
 
            <div class="header">
-            <img  src="${pageContext.request.contextPath}/img/2.jpg" alt="">
-            <img class="pic" src="${pageContext.request.contextPath}/img/head.png" alt="">
-            <p class="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
-        </div>
+               <img  src="${pageContext.request.contextPath}/img/2.jpg" alt="">
+               <input type="file" id="btn_file" style="display:none">
+               <img class="pic" src="${pageContext.request.contextPath}/img/3.jpg" alt="" onclick="F_Open_dialog()">
+               <p class="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
+           </div>
+
+
         <div class="left-box">
                     <li class="td">
                         <strong>${sum.attention}</strong>
@@ -45,11 +48,11 @@
             <a onclick="repair1()" id="wri" href="#">编辑</a>
             <button   type="submit" onclick="load1()" id="loa"  href="#">保存</button>
             <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                <input type="hidden" name="bossId" value="${sessionScope.name.name}">
+                <input type="hidden" name="bossId" value="${name.id}">
                 <tr class="information_tr">
                     <td>昵称:
                         <span class="form1">${userInformation.name}</span>
-                        <input type="text" class="form_control" name="name" value="${userInformation.name}"  >
+                        <input type="text" class="form_control" name="name" value="${userInformation.name}">
                     </td>
                 </tr>
                 <tr class="information_tr">
@@ -116,6 +119,7 @@
 
             </table>
         </div>
+            ${ku}
         </form>
         <div id="content">
         <div id="middle">
@@ -124,8 +128,8 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}/img/head.png" alt=""></li>
-                            <li><a>${blog.bossId}</a></li><br>
+                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}/img/3.jpg" alt=""></li>
+                            <li><a>${name.name}</a></li><br>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
                             <li class="delete_weibo" >
@@ -153,14 +157,26 @@
                         </ul>
                     </div>
                     <div class="comment">
-                        <form action="${pageContext.request.contextPath}/addCommentServlet?blogCreatAtAndName=${blog.creatAtAndName}&id=own">
-                            <textarea name="" id="send_input" cols="62" rows="3"></textarea>
+                        <form action="${pageContext.request.contextPath}/addCommentServlet?blogCreatAtAndName=${blog.creatAtAndName}&id=own" method="post">
+                            <textarea name="comment" id="send_input" cols="70" rows="3"></textarea>
                             <button type="submit">评论</button>
                         </form>
                         <div class="reply">
-                            <ul>
-                                <li>评论显示处</li>
-                            </ul>
+                            <c:forEach items="${blog.listCom}" var="com">
+                                <ul>
+                                    <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=own" method="post">
+                                        <div class="reply_box" >
+                                            <img src="${pageContext.request.contextPath}/img/1.jpg" alt="">
+                                            <p class="reply_user">${name.name}:${com.comment}</p>
+                                        </div>
+                                        <span class="reply_time">${com.creatAt}</span>
+                                        <c:if test="${com.bossId == name.id}">
+                                        <button type="submit" class="reply_delete">删除</button>
+                                        </c:if>
+                                    </form>
+
+                                </ul>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -250,7 +266,10 @@
             }
         }
 
-
+        function F_Open_dialog()
+        {
+            document.getElementById("btn_file").click();
+        }
     </script>
 </body>
 </html>

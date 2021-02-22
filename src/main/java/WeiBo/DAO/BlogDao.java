@@ -75,7 +75,9 @@ public class BlogDao {
     public void deleteBlog(String bossId,String creatAtAndName) {
         String sql1 = "delete picture from picture where creatAtAndName = ?";
         String sql = "delete Blog from Blog where bossId = ? and creatAtAndName = ?";
+        String sql2 = "delete comment from comment where blogCreatAtAndName = ?";
         jdbcTemplate.update(sql1,creatAtAndName);
+        jdbcTemplate.update(sql2,creatAtAndName);
         jdbcTemplate.update(sql,bossId,creatAtAndName);
     }
 

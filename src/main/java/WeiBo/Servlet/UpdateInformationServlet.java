@@ -24,33 +24,20 @@ public class UpdateInformationServlet extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-         /*
-        String bossId = request.getParameter("bossId");
-        System.out.println(bossId);
-        String name = request.getParameter("name");
-        System.out.println(name);
-        String age = request.getParameter("age");
-        String qq = request.getParameter("qq");
-        String mail = request.getParameter("mail");
-        String sex = request.getParameter("sex");
-        String birth = request.getParameter("birth");
-        String own = request.getParameter("own");
-        String birthArea = request.getParameter("birthArea");
-       InformationBean.setBossId(bossId);
-        InformationBean.setName(name);
-        InformationBean.setAge(age);
-        InformationBean.setBirth(birth);
-        InformationBean.setMail(mail);
-        InformationBean.setQq(qq);
-        InformationBean.setSex(sex);
-        InformationBean.setBirthArea(birthArea);
-        InformationBean.setOwn(own);
 
-          */
         InformationServiceImp informationServiceImp = new InformationServiceImp();
-        informationServiceImp.updateInformation(InformationBean);
-        request.setAttribute("userInformation",InformationBean);
-        request.getRequestDispatcher("/View/Information.jsp").forward(request,response);
+        int i = informationServiceImp.updateInformation(InformationBean);
+
+        if(i  == 0){
+            request.setAttribute("ku","该昵称已存在");
+        }
+        else{
+            BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
+            bossBean.setName(InformationBean.getName());
+            request.getSession().setAttribute("name",bossBean);
+            request.getSession().setAttribute("userInformation",InformationBean);
+        }
+          request.getRequestDispatcher("/View/Information.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

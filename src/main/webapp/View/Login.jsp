@@ -241,7 +241,7 @@
             <div class="circle" style="--x:3"></div>
             <div class="circle" style="--x:4"></div>
         <div class="pic">
-            <img src="${pageContext.request.contextPath }/img/pic.jpg" alt="" width="350px" height="375px" >
+            <img src="${pageContext.request.contextPath }/img/4.jpg" alt="" width="350px" height="375px" >
         </div>
 
         <div class="login-box">
@@ -249,7 +249,7 @@
                 <div class="login-title">登录</div>
                 <form action="" method="post">
                     <div class="text1" >
-                        <input name="boss" type="text" placeholder="手机号/邮箱" value="${cookie.Name.value}" >
+                        <input name="Id" type="text" placeholder="手机号/邮箱" value="${cookie.Id.value}" >
                     </div>
                     <div class="warning1">
                         <span>数据不能为空</span>
@@ -283,7 +283,7 @@
                         <span></span>
                     </div>
                     <div style="text-align:center; font-size: medium" >
-                        ${sessionScope.ku}
+                        ${ku}
                     </div>
                 </div>
             </div>

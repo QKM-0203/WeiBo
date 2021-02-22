@@ -28,6 +28,7 @@ import java.util.List;
 public class AddBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Date d = new Date();
+
         ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory());
         servletFileUpload.setHeaderEncoding("utf-8");
         String userImg = "userImg";
@@ -36,8 +37,8 @@ public class AddBlogServlet extends HttpServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(d);
         BlogBean blogBean = new BlogBean();
-        blogBean.setBossId(boss.getName());
-        blogBean.setCreatAtAndName(dateNowStr+boss.getName());
+        blogBean.setBossId(boss.getId());
+        blogBean.setCreatAtAndName(dateNowStr+boss.getId());
         try {
             ArrayList<PictureBean> pictureBeans = new ArrayList<>();
             List<FileItem> fileItems = servletFileUpload.parseRequest(request);
@@ -50,7 +51,7 @@ public class AddBlogServlet extends HttpServlet {
                     String realPath = this.getServletContext().getRealPath("/userImg");
                     PictureBean pictureBean = new PictureBean();
                     pictureBean.setPictureUri(realPath.substring(60)+"/"+picName);
-                    pictureBean.setCreatAtAndName(dateNowStr+boss.getName());
+                    pictureBean.setCreatAtAndName(dateNowStr+boss.getId());
                     pictureBeans.add(pictureBean);
                     File file = new File(realPath);
                     if(!file.exists()){

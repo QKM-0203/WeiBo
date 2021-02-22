@@ -21,7 +21,7 @@ public class FindInformationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         BossBean bossBean =(BossBean)session.getAttribute("name");
         InformationServiceImp userServiceImp = new InformationServiceImp();
-        InformationBean information = userServiceImp.findInformation(bossBean.getName());
+        InformationBean information = userServiceImp.findInformation(bossBean.getId());
         request.getSession().setAttribute("userInformation",information);
         String id = request.getParameter("id");
         if(id.equals("look")){

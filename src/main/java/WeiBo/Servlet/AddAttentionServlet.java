@@ -19,7 +19,7 @@ public class AddAttentionServlet extends HttpServlet {
         BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
         SumBean sum = (SumBean) request.getSession().getAttribute("sum");
         BlogServiceImp blogServiceImp = new BlogServiceImp();
-        blogServiceImp.addAttentions(bossBean.getName(), peopleId);
+        blogServiceImp.addAttentions(bossBean.getId(), peopleId);
         sum.setAttention(sum.getAttention()+1);
         request.getSession().setAttribute("sum",sum);
         request.getRequestDispatcher("View/Blog.jsp").forward(request,response);

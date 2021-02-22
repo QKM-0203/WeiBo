@@ -10,11 +10,11 @@ public class BossDao {
 
     public BossBean findBoss(BossBean bossBean) {
         try {
-            String sql = "select * from boss where name = ? and password = ?";
+            String sql = "select * from boss where ID = ? and password = ?";
             //没有找到对应的名字的密码就会抛出异常，不会返回空，所以利用异常来返回一个空
             //查询返回一个Boss对象
             BossBean bossBean1 = jdbcTemplate.queryForObject(sql,
-                    new BeanPropertyRowMapper<BossBean>(BossBean.class), bossBean.getName(), bossBean.getPassword());
+                    new BeanPropertyRowMapper<BossBean>(BossBean.class), bossBean.getId(), bossBean.getPassword());
             return bossBean1;
         } catch (DataAccessException e) {
             e.printStackTrace();
@@ -23,9 +23,9 @@ public class BossDao {
     }
 
     public int addBoss(BossBean bossBean) {
-        String sql = "insert into boss value(?,?)";
+        String sql = "insert into boss value(?,?,?)";
         try{
-            jdbcTemplate.update(sql,bossBean.getName(), bossBean.getPassword());
+            jdbcTemplate.update(sql,bossBean.getId(), bossBean.getPassword());
         }catch(Exception e){
             return 0;
         }

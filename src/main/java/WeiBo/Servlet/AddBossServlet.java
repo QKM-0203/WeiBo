@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet(value = "/addBossServlet",name = "addBossServlet")
 public class AddBossServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String Id = request.getParameter("Id");
         String password = request.getParameter("password");
         String password1 = request.getParameter("password1");
         if(password.equals("")|| password1.equals("")){
@@ -24,14 +25,16 @@ public class AddBossServlet extends HttpServlet {
             bossServiceImp bossServiceImp = new bossServiceImp();
             BossBean bossBean = new BossBean();
             bossBean.setPassword(password);
-            bossBean.setName(username);
+            bossBean.setId(Id);
+            long time = new Date().getTime();
+            bossBean.setName("用户"+time);
             int i = bossServiceImp.addBoss(bossBean);
             if(i == 1){
                 InformationServiceImp informationServiceImp = new InformationServiceImp();
-                informationServiceImp.addInformation(username);
+                informationServiceImp.addInformation(Id,bossBean.getName());
                 request.setAttribute("ku","注册成功");
             }else{
-                request.setAttribute("ku","该用户名已被注册");
+                request.setAttribute("ku","该用户已被注册");
             }
         }else{
             request.setAttribute("ku","两次密码不一致");

@@ -35,10 +35,10 @@ nav{
     padding:  10px;
     font-size: 20px;
 }
-
 .header{
     position: relative;
-    width: 73%;
+    width: 78%;
+    left: 2.7%;
     margin: 20px auto;
     overflow: hidden;
 }
@@ -58,7 +58,7 @@ nav{
     background-color: white;
     position: absolute;
     left: 13.5%;
-    top: 340px;
+    top: 400px;
     width: 27%;
     font-size: 16px;
     text-align: center;
@@ -82,7 +82,7 @@ strong{
 #information{
     position: absolute;
     background-color: white;
-    top: 420px;
+    top: 480px;
     left: 13.5%;
     width: 27%;
     margin-bottom: 30px;
@@ -108,7 +108,7 @@ strong{
 
 #content{
     position: absolute;
-    /* top:320px; */
+    top:375px;
     left: 42.5%;
     width: 660px;
     margin-top:5px;
@@ -117,15 +117,13 @@ strong{
 #middle{
     display: inline-block;
     float: left;
-    width:80%;
+    width:89%;
     height:100%;
     margin-right: 10px;
     /* margin-top:20px; */
     /* border-radius: 5px; */
     /* background-color: pink; */
 }
-
-
 #right{
     display: inline-block;
     width:23%;
@@ -297,6 +295,7 @@ strong{
     min-height:0px;
 }
 .reply ul{
+    position: relative;
     list-style: none;
     margin:1%;
     width:98%;
@@ -307,6 +306,34 @@ strong{
     min-height:40px;
     line-height: 40px;
     border-top: 1px solid #808080;
+}
+.reply_box{
+    position: relative;
+    padding: 10px;
+    padding-bottom: 0px;
+    min-height: 50px;
+}
+.reply_box img{
+    float: left;
+    width:50px;
+    height:50px;
+    padding-right: 10px;
+    border-radius: 50%;
+}
+.reply_user{
+    display: inline-block;
+    line-height: 25px;
+    width:88%;
+}
+.reply_time{
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    color:#808080;
+}
+.reply_delete{
+    position: absolute;
+    right: 10px;
 }
 .hold{
     display: none;

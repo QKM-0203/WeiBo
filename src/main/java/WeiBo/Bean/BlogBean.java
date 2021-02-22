@@ -9,12 +9,21 @@ public class BlogBean {
     private String creatAtAndName;
     private List<PictureBean> listPic;
 
+
     private List<CommentBean> listCom;
+
+
 
     public List<CommentBean> getListCom() {
         return listCom;
     }
+    public String getBossId() {
+        return bossId;
+    }
 
+    public void setBossId(String bossId) {
+        this.bossId = bossId;
+    }
     public void setListCom(List<CommentBean> listCom) {
         this.listCom = listCom;
     }
@@ -27,13 +36,6 @@ public class BlogBean {
         this.listPic = listPic;
     }
 
-    public String getBossId() {
-        return bossId;
-    }
-
-    public void setBossId(String bossId) {
-        this.bossId = bossId;
-    }
 
     public String getThink() {
         return think;
