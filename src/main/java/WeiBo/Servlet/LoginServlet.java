@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
             Cookie[] cookies = request.getCookies();
             for (Cookie cookie : cookies) {
                 if(cookie.getName().equals("Id")){
-                    request.getRequestDispatcher("/findBlogServlet?size=all").forward(request,response);
+                    request.getRequestDispatcher("/findBlogServlet?bossId=1").forward(request,response);
                 }
             }
             BossBean bossBean = new BossBean();
@@ -43,8 +43,11 @@ public class LoginServlet extends HttpServlet {
             bossBean.setPassword(password);
             bossServiceImp bossServiceImp = new bossServiceImp();
             BossBean bossBean1 = bossServiceImp.findBoss(bossBean);
-            System.out.println(bossBean1.getHead());
             if(bossBean1 != null){
+                if(request.getSession().getAttribute("name")!= null){
+                    request.setAttribute("ku","不能重复登录");
+                    request.getRequestDispatcher("/View/Login.jsp").forward(request,response);
+                }
                 session.setAttribute("name",bossBean1);
                 String remember = request.getParameter("remember");
                 if(remember != null){
@@ -55,7 +58,7 @@ public class LoginServlet extends HttpServlet {
                     response.addCookie(cookie);
                     response.addCookie(password1);
                 }
-               response.sendRedirect(request.getContextPath()+"/findBlogServlet?size=all");
+               response.sendRedirect(request.getContextPath()+"/findBlogServlet?bossId=1");
             } else{
                 request.setAttribute("ku","用户名或密码错误");
                 request.getRequestDispatcher("/View/Login.jsp").forward(request,response);

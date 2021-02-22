@@ -19,18 +19,13 @@ import java.util.List;
 public class FindInformationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        BossBean bossBean =(BossBean)session.getAttribute("name");
+        String bossId = request.getParameter("bossId");
         InformationServiceImp userServiceImp = new InformationServiceImp();
-        InformationBean information = userServiceImp.findInformation(bossBean.getId());
+        InformationBean information = userServiceImp.findInformation(bossId);
         request.getSession().setAttribute("userInformation",information);
         String id = request.getParameter("id");
         if(id.equals("look")){
-            String size = request.getParameter("size");
-            if(size.equals("own")){
-                request.getRequestDispatcher("/findBlogServlet?size=own").forward(request,response);
-            }else{
-                request.getRequestDispatcher("/findBlogServlet?size=all").forward(request,response);
-            }
+                request.getRequestDispatcher("/findBlogServlet?bossId="+bossId).forward(request,response);
         }
         else{
 

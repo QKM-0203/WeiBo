@@ -18,24 +18,32 @@ import java.util.List;
 public class FindBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BlogServiceImp blogServiceImp = new BlogServiceImp();
-        String size = request.getParameter("size");
+        String bossId = request.getParameter("bossId");
         BossBean bossBean = (BossBean) request.getSession().getAttribute("name");
-
         SumBean sumBean = new SumBean();
-        sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossBean.getId()));
-        sumBean.setAttention(blogServiceImp.attentions(bossBean.getId()));
-        sumBean.setFans(blogServiceImp.Fans(bossBean.getId()));
-        request.getSession().setAttribute("sum", sumBean);
-
-        if(size.equals("all")){
+        if(bossId.equals("1")){
             List<BlogBean> blogs = blogServiceImp.findBlogs();
             request.getSession().setAttribute("AllBlogs",blogs);
             request.getRequestDispatcher("/View/Blog.jsp").forward(request,response);
+            sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossBean.getId()));
+            sumBean.setAttention(blogServiceImp.attentions(bossBean.getId()));
+            sumBean.setFans(blogServiceImp.Fans(bossBean.getId()));
+            request.getSession().setAttribute("sum", sumBean);
+
         }else{
-            HttpSession session = request.getSession();
-            List<BlogBean> blogsByBoosId = blogServiceImp.findBlogsByBoosId(bossBean.getId());
+            sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossId));
+            sumBean.setAttention(blogServiceImp.attentions(bossId));
+            sumBean.setFans(blogServiceImp.Fans(bossId));
+            request.getSession().setAttribute("sum", sumBean);
+
+            List<BlogBean> blogsByBoosId = blogServiceImp.findBlogsByBoosId(bossId);
             request.getSession().setAttribute("blogs",blogsByBoosId);
-            request.getRequestDispatcher("/View/Information.jsp").forward(request,response);
+            if(bossId.equals(bossBean.getId())){
+                request.getRequestDispatcher("/View/Information.jsp").forward(request,response);
+            }else{
+                request.getRequestDispatcher("/View/OtherInformation.jsp").forward(request,response);
+
+            }
         }
     }
 

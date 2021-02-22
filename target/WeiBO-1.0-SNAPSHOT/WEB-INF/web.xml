@@ -22,6 +22,9 @@
         <servlet-name>deleteCommentServlet</servlet-name>
         <servlet-name>deleteAttentionServlet</servlet-name>
         <servlet-name>addAttentionServlet</servlet-name>
+        <url-pattern>/index.jsp</url-pattern>
+        <url-pattern>/View/Information.jsp</url-pattern>
+        <url-pattern>/View/Blog.jsp</url-pattern>
     </filter-mapping>
 
 

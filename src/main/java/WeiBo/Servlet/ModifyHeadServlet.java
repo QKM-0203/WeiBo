@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class ModifyHeadServlet extends HttpServlet {
         BossBean boss = (BossBean) session.getAttribute("name");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            ArrayList<PictureBean> pictureBeans = new ArrayList<>();
             List<FileItem> fileItems = servletFileUpload.parseRequest(request);
             for (FileItem fileItem : fileItems) {
                 if (!fileItem.isFormField()) {
@@ -47,20 +45,20 @@ public class ModifyHeadServlet extends HttpServlet {
                     fileItem.delete();
                     BlogServiceImp blogServiceImp = new BlogServiceImp();
                     blogServiceImp.modifyHead("/head/"+picName,boss.getId());
-                    BossBean bossBean= (BossBean) request.getSession().getAttribute("name");
-                    File file2 = new File(this.getServletContext().getRealPath(bossBean.getHead()));
+                    File file2 = new File(this.getServletContext().getRealPath(boss.getHead()));
                     if(!file2.getName().equals("default.jpg")){
                         file2.delete();
                     }
-                    bossBean.setHead("/head/"+picName);
-                    request.getSession().setAttribute("name",bossBean);
+                    boss.setHead("/head/"+picName);
+                    request.getSession().setAttribute("name",boss);
 
+                    System.out.println(boss.getHead());
                     List<BlogBean> blogs = (List<BlogBean>)request.getSession().getAttribute("AllBlogs");
-                    List<BlogBean> blogBeans = modifyHead(blogs, bossBean.getId(), bossBean.getHead());
+                    List<BlogBean> blogBeans = modifyHead(blogs, boss.getId(), boss.getHead());
                     request.getSession().setAttribute("AllBlogs",blogBeans);
 
                     List<BlogBean> blog = (List<BlogBean>)request.getSession().getAttribute("blogs");
-                    List<BlogBean> blogBeans1 = modifyHead(blog, bossBean.getId(), bossBean.getHead());
+                    List<BlogBean> blogBeans1 = modifyHead(blog, boss.getId(), boss.getHead());
                     request.getSession().setAttribute("blogs",blogBeans1);
 
                 }
@@ -70,6 +68,8 @@ public class ModifyHeadServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        response.sendRedirect(request.getContextPath()+"/View/Information.jsp");
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      doPost(request, response);

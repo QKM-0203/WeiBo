@@ -48,10 +48,12 @@ public class DeleteBlogServlet extends HttpServlet {
     public void deleteListElement(List<BlogBean> blogs,String bossId,String time,HttpServletRequest request){
         for (int i = 0; i < blogs.size(); i++) {
             if (blogs.get(i).getBossId().equals(bossId) && blogs.get(i).getCreatAtAndName().equals(time)) {
-                for (PictureBean pictureBean : blogs.get(i).getListPic()) {
-                    File f = new File(getServletContext().getRealPath(pictureBean.getPictureUri()));
-                    f.delete();
-                }
+               if(blogs.get(i).getListPic() != null){
+                   for (PictureBean pictureBean : blogs.get(i).getListPic()) {
+                       File f = new File(getServletContext().getRealPath(pictureBean.getPictureUri()));
+                       f.delete();
+                   }
+               }
                 blogs.remove(i);
                 i--;
                 break;

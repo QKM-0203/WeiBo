@@ -14,15 +14,15 @@
 
     <div id="header">
         <ul id="header_ul">
-            <li><a href="${pageContext.request.contextPath}/findBlogServlet?size=all">首页</a></li>
-            <li><a href="${pageContext.request.contextPath}/findInformationServlet?id=look&size=own">用户:${name.name}</a></li>
+            <li><a href="${pageContext.request.contextPath}/findBlogServlet?bossId=1">首页</a></li>
+            <li><a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${name.id}">用户:${name.name}</a></li>
         </ul>
     </div>
 
     <div id="content">
         <div id="left">
             <ul id="left_group">
-                <li><a href="${pageContext.request.contextPath}/findInformationServlet?id=look&size=own" methods="post">个人信息</a></li>
+                <li><a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${name.id}" methods="post">个人信息</a></li>
                 <li><a>我的关注</a></li>
                 <li><a>我的草稿箱</a></li>
             </ul>
@@ -50,7 +50,7 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
+                            <li><img  href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${blog.bossId}" style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
                             <li><a>${blog.name}</a></li><br>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
@@ -83,7 +83,7 @@
                     <div class="article_content">
                         ${blog.think}<br>
                             <c:forEach  var="PicBean" items="${blog. listPic}">
-                        <img style="width: 140px;height: 190px;" src="${pageContext.request.contextPath}${PicBean.pictureUri}">
+                        <img style="width: 140px;height: 190px;"  src="${pageContext.request.contextPath}${PicBean.pictureUri}">
                             </c:forEach>
                     </div>
                     <div class="article_bottom">
@@ -105,7 +105,7 @@
                             <ul>
                                 <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=all" method="post">
                                 <div class="reply_box" >
-                                    <img src="${pageContext.request.contextPath}${com.head}" alt="">
+                                    <img  href="findInformationServlet?id=look&bossId=${com.bossId}" src="${pageContext.request.contextPath}${com.head}" alt="">
                                     <p class="reply_user">${com.name}:${com.comment}</p>
                                 </div>
                                 <span class="reply_time">${com.creatAt}</span>
@@ -125,7 +125,7 @@
         <div id="right">
             <div class="right_header">
 
-                <img class="pic"  src="${pageContext.request.contextPath}${sessionScope.name.head}" alt="">
+                <img class="pic"  href="findInformationServlet?id=look&bossId=${name.id}"src="${pageContext.request.contextPath}${sessionScope.name.head}" alt="">
                 <p class="name" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.name.name}</p>
             </div>
             <div class="left-box">

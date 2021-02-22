@@ -15,18 +15,54 @@
        <div class="box">
            <nav>
                <ul class="nav1">
-                   <li> <a href="${pageContext.request.contextPath}/findBlogServlet?size=all">首页</a>
-                   <li><a href="${pageContext.request.contextPath}/findInformationServlet?id=look&size=own">用户:${name.name}</a>
+                   <li> <a href="${pageContext.request.contextPath}/findBlogServlet?bossId=1">首页</a>
+                   <li><a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${name.id}">用户:${name.name}</a>
                </ul>
            </nav>
 
            <div class="header">
                <img  src="${pageContext.request.contextPath}/img/2.jpg" alt="">
                <input type="file" id="btn_file" style="display:none">
-               <img class="pic" src="${pageContext.request.contextPath}${name.head}" alt="" onclick="F_Open_dialog()">
-               <p class="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
-           </div>
+               </div>
+           <div id="right">
+               <div class="right_header">
+                   <!--
 
+                       头像限制为圆
+
+
+                    -->
+                   <img class="pic"  onclick="popBox()" style="width: 100px ; height:100px; " src="${pageContext.request.contextPath}${name.head}" alt="">
+                   <p class="name" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${name.name}</p>
+
+
+                   <!-- /*
+
+
+                   头像更改
+
+
+                   */ -->
+                   <!-- /*背景层*/ -->
+                   <div id="popLayer"></div>
+                   <!-- /*弹出层*/ -->
+                   <div id="popBox">
+                       <div class="close">
+                           <a onclick="closeBox()">关闭</a>
+                       </div>
+                       <div class="content">
+                           <form action="${pageContext.request.contextPath}/modifyHeadServlet" method="post" enctype="multipart/form-data">
+                               <input type="file" name = "filename" value = "选择图片">
+                               <button type="submit">提交</button>
+                           </form>
+                       </div>
+                   </div>
+
+
+
+
+               </div>
+           </div>
 
         <div class="left-box">
                     <li class="td">
@@ -128,7 +164,7 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
+                            <li><img href="findInformationServlet?id=look&bossId=${name.id}" style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
                             <li><a>${blog.name}</a></li><br>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
@@ -166,7 +202,7 @@
                                 <ul>
                                     <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=own" method="post">
                                         <div class="reply_box" >
-                                            <img src="${pageContext.request.contextPath}${com.head}" alt="">
+                                            <img href="findInformationServlet?id=look&bossId=${com.bossId}" src="${pageContext.request.contextPath}${com.head}" alt="">
                                             <p class="reply_user">${com.name}:${com.comment}</p>
                                         </div>
                                         <span class="reply_time">${com.creatAt}</span>
@@ -269,6 +305,21 @@
         function F_Open_dialog()
         {
             document.getElementById("btn_file").click();
+        }
+        /*点击弹出按钮*/
+        function popBox() {
+            var popBox = document.getElementById("popBox");
+            var popLayer = document.getElementById("popLayer");
+            popBox.style.display = "block";
+            popLayer.style.display = "block";
+        };
+
+        /*点击关闭按钮*/
+        function closeBox() {
+            var popBox = document.getElementById("popBox");
+            var popLayer = document.getElementById("popLayer");
+            popBox.style.display = "none";
+            popLayer.style.display = "none";
         }
     </script>
 </body>
