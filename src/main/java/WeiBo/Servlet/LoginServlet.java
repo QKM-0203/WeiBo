@@ -44,7 +44,8 @@ public class LoginServlet extends HttpServlet {
             bossServiceImp bossServiceImp = new bossServiceImp();
             BossBean bossBean1 = bossServiceImp.findBoss(bossBean);
             if(bossBean1 != null){
-                if(request.getSession().getAttribute("name")!= null){
+                BossBean bossBean2 = (BossBean) request.getSession().getAttribute("name");
+                if(bossBean2.getId().equals(bossBean1.getId())){
                     request.setAttribute("ku","不能重复登录");
                     request.getRequestDispatcher("/View/Login.jsp").forward(request,response);
                 }

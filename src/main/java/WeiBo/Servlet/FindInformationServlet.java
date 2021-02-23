@@ -27,10 +27,6 @@ public class FindInformationServlet extends HttpServlet {
         if(id.equals("look")){
                 request.getRequestDispatcher("/findBlogServlet?bossId="+bossId).forward(request,response);
         }
-        else{
-
-            request.getRequestDispatcher("/View/updateInformation.jsp").forward(request,response);
-        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

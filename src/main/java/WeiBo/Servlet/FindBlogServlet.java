@@ -24,11 +24,12 @@ public class FindBlogServlet extends HttpServlet {
         if(bossId.equals("1")){
             List<BlogBean> blogs = blogServiceImp.findBlogs();
             request.getSession().setAttribute("AllBlogs",blogs);
-            request.getRequestDispatcher("/View/Blog.jsp").forward(request,response);
-            sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossBean.getId()));
+             sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossBean.getId()));
             sumBean.setAttention(blogServiceImp.attentions(bossBean.getId()));
             sumBean.setFans(blogServiceImp.Fans(bossBean.getId()));
             request.getSession().setAttribute("sum", sumBean);
+            request.getRequestDispatcher("/View/Blog.jsp").forward(request,response);
+
 
         }else{
             sumBean.setTotalBlogs(blogServiceImp.totalBlogs(bossId));

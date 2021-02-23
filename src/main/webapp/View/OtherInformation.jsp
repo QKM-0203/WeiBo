@@ -109,8 +109,10 @@
                     <div class="article">
                         <div class="article_top">
                             <ul>
-                                <li><img href="findInformationServlet?id=look&bossId=${blog.bossId}"style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
-                                <li><a>${blog.name}</a></li><br>
+                                <a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${blog.bossId}">
+                                    <li><img  style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
+                                    <li><a>${blog.name}</a></li><br>
+                                </a>
                                 <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
                             </ul>
                         </div>
@@ -139,8 +141,9 @@
                                     <ul>
                                         <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=own" method="post">
                                             <div class="reply_box" >
-                                                <img href="findInformationServlet?id=look&bossId=${com.bossId}" src="${pageContext.request.contextPath}${com.head}" alt="">
-                                                <p class="reply_user">${com.name}:${com.comment}</p>
+                                                <a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${com.bossId}">
+                                                <img src="${pageContext.request.contextPath}${com.head}" alt="">
+                                                    <p class="reply_user">${com.name}:</p></a><p>${com.comment}</p>
                                             </div>
                                             <span class="reply_time">${com.creatAt}</span>
                                             <c:if test="${com.bossId == name.id}">

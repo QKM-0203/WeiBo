@@ -50,8 +50,10 @@
                 <div class="article">
                     <div class="article_top">
                         <ul>
-                            <li><img  href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${blog.bossId}" style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
+                            <a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${blog.bossId}">
+                            <li><img   style="width:40px;height:40px;" src="${pageContext.request.contextPath}${blog.head}" alt=""></li>
                             <li><a>${blog.name}</a></li><br>
+                            </a>
                             <li><a style="font-size: small ;margin-left:0px">${fn:substring(blog.creatAtAndName,0,19)}</a></li>
 
 
@@ -105,8 +107,10 @@
                             <ul>
                                 <form action="${pageContext.request.contextPath}/deleteCommentServlet?creatAt=${com.creatAt}&blogCreatAtAndName=${blog.creatAtAndName}&id=all" method="post">
                                 <div class="reply_box" >
-                                    <img  href="findInformationServlet?id=look&bossId=${com.bossId}" src="${pageContext.request.contextPath}${com.head}" alt="">
-                                    <p class="reply_user">${com.name}:${com.comment}</p>
+                                    <a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${com.bossId}">
+                                    <img   src="${pageContext.request.contextPath}${com.head}" alt="">
+                                        <p class="reply_user">${com.name}:</p></a><p>${com.comment}</p>
+
                                 </div>
                                 <span class="reply_time">${com.creatAt}</span>
                                     <c:if test="${com.bossId == sessionScope.name.id}">
@@ -125,8 +129,10 @@
         <div id="right">
             <div class="right_header">
 
-                <img class="pic"  href="findInformationServlet?id=look&bossId=${name.id}"src="${pageContext.request.contextPath}${sessionScope.name.head}" alt="">
+                <a href="${pageContext.request.contextPath}/findInformationServlet?id=look&bossId=${name.id}">
+                <img class="pic"  src="${pageContext.request.contextPath}${sessionScope.name.head}" alt="">
                 <p class="name" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.name.name}</p>
+                </a>
             </div>
             <div class="left-box">
                 <li class="td">
